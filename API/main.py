@@ -34,7 +34,6 @@ def home():
     #mysql_db.connect()
     conexion = mysql.connector.connect(
         host = Server,
-        port = 8080,
         user = Usuario,
         password = Contraseña,
     )
