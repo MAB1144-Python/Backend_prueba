@@ -4,7 +4,7 @@ import peewee
 from peewee import *
 from contextvars import ContextVar
 from fastapi import Depends
-
+import mysql.connector
 from pydantic import BaseSettings
 from dotenv import load_dotenv
 load_dotenv()
@@ -30,9 +30,15 @@ def home():
     Colección = 'BrayanMontenegro'
     Usuario = 'bmontenegroprueba'
     Contraseña = 'bmontenegroprueba'
-    mysql_db = MySQLDatabase(Colección, user=Usuario, password=Contraseña,
-                            host=Server)
-    mysql_db.connect()
+    #mysql_db = MySQLDatabase(Colección, user=Usuario, password=Contraseña,host=Server, port=0)
+    #mysql_db.connect()
+    conexion = mysql.connector.connect(
+        host = Server,
+        port = 8080,
+        user = Usuario,
+        password = Contraseña,
+    )
+    cursor = conexion.cursor()
     #mysql_db._state = PeeweeConnectionState()
     #print()
     return {"message": "Hello World"}
