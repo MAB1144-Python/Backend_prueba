@@ -6,30 +6,32 @@ from contextvars import ContextVar
 from fastapi import Depends
 from pydantic import BaseSettings
 from dotenv import load_dotenv
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi import status
+from fastapi.routing import APIRouter
+from route.route_Conteo_Vehiculos import routes_Conteo_Vehiculos
+from route.route_Recaudo_Vehiculos import routes_Recaudo_Vehiculos
 
-load_dotenv()
 
 app = FastAPI()
+app.include_router(routes_Conteo_Vehiculos, prefix = "/datos")
+app.include_router(routes_Recaudo_Vehiculos, prefix = "/datos")
+# Configuración de CORS
+origins = [
+    "http://localhost",
+    "http://localhost:3000",
+    "http://localhost:4200",
+    "http://localhost:8000",
+    # Agrega aquí los orígenes permitidos
+]
 
+# Agregar middleware CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-@app.get('/Conteo_Vehiculos')
-def home():
-    conn = pyodbc.connect('Driver={SQL Server};'+
-                        'Server=23.102.103.53;'+
-                        'Database=BrayanMontenegro;'+
-                        'UID=bmontenegroprueba;'+
-                        'PWD=bmontenegroprueba;'
-                        )
-
-    # Creación de la tabla
-    #estacion VARCHAR(50),sentido VARCHAR(50),fecha_hora TIME,cantegoria VARCHAR(50),cantidad INT
-    cursor = conn.cursor()
-    # Consulta para obtener todos los datos de la tabla
-    select_query = "SELECT * FROM Tabla_Conteo_Vehiculos"
-
-    # Ejecutar la consulta y obtener los resultados
-    df = pd.read_sql_query(select_query, conn)
-
-    # Cerrar la conexión
-    conn.close()
-    return {"message": df.to_json(orient='records')}
