@@ -1,10 +1,11 @@
 from fastapi import FastAPI
 import os
+import pyodbc
+import pandas as pd
 from contextvars import ContextVar
 from fastapi import Depends
 from pydantic import BaseSettings
 from dotenv import load_dotenv
-import pyodbc
 
 load_dotenv()
 
@@ -31,4 +32,4 @@ def home():
 
     # Cerrar la conexión
     conn.close()
-    return {"message": }
+    return {"message": df.to_json(orient='records')}
