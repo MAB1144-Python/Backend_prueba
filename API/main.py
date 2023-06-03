@@ -1,43 +1,34 @@
 from fastapi import FastAPI
 import os
-import peewee
-from peewee import *
 from contextvars import ContextVar
 from fastapi import Depends
-import mysql.connector
 from pydantic import BaseSettings
 from dotenv import load_dotenv
+import pyodbc
+
 load_dotenv()
-
-
-class Settings(BaseSettings):
-
-    db_name: str = os.getenv('DB_NAME')
-    db_user: str = os.getenv('DB_USER')
-    db_pass: str = os.getenv('DB_PASS')
-    db_host: str = os.getenv('DB_HOST')
-    db_port: str = os.getenv('DB_PORT')
 
 app = FastAPI()
 
 
-@app.get('/')
+@app.get('/Conteo_Vehiculos')
 def home():
+    conn = pyodbc.connect('Driver={SQL Server};'+
+                        'Server=23.102.103.53;'+
+                        'Database=BrayanMontenegro;'+
+                        'UID=bmontenegroprueba;'+
+                        'PWD=bmontenegroprueba;'
+                        )
 
-    # Connect to a MySQL database on network.
-    #Base de datos
-    Server = '23.102.103.53'
-    Colección = 'BrayanMontenegro'
-    Usuario = 'bmontenegroprueba'
-    Contraseña = 'bmontenegroprueba'
-    #mysql_db = MySQLDatabase(Colección, user=Usuario, password=Contraseña,host=Server, port=0)
-    #mysql_db.connect()
-    conexion = mysql.connector.connect(
-        host = Server,
-        user = Usuario,
-        password = Contraseña,
-    )
-    cursor = conexion.cursor()
-    #mysql_db._state = PeeweeConnectionState()
-    #print()
-    return {"message": "Hello World"}
+    # Creación de la tabla
+    #estacion VARCHAR(50),sentido VARCHAR(50),fecha_hora TIME,cantegoria VARCHAR(50),cantidad INT
+    cursor = conn.cursor()
+    # Consulta para obtener todos los datos de la tabla
+    select_query = "SELECT * FROM Tabla_Conteo_Vehiculos"
+
+    # Ejecutar la consulta y obtener los resultados
+    df = pd.read_sql_query(select_query, conn)
+
+    # Cerrar la conexión
+    conn.close()
+    return {"message": }
