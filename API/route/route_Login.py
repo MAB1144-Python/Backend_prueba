@@ -17,7 +17,7 @@ routes_login = APIRouter()
     path="/login",
     status_code=status.HTTP_200_OK,
     tags=["models"],
-    summary="""Datos de Conteo de vehiculos.
+    summary="""Login para acceso.
     """
     )
 async def login(username: str,password: str):

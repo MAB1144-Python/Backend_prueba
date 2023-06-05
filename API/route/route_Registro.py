@@ -17,7 +17,7 @@ routes_Registro = APIRouter()
     path="/Registro",
     status_code=status.HTTP_200_OK,
     tags=["models"],
-    summary="""Datos de Conteo de vehiculos.
+    summary="""Registro de usuarios.
     """
     )
 async def Registro(username: str,first_name: str,last_name: str,cellphone: str,email: str,password: str,born_date: str):

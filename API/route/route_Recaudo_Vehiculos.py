@@ -17,7 +17,7 @@ routes_Recaudo_Vehiculos = APIRouter()
     path="/Recaudo_Vehiculos",
     status_code=status.HTTP_200_OK,
     tags=["models"],
-    summary="""Datos de Conteo de vehiculos.
+    summary="""Datos de recaudo de vehiculos.
     """
     )
 async def Recaudo_Vehiculos(sel_estacion: str,sel_sentido: str,sel_categoria: str,fecha_hora_ini: str,fecha_hora_fin: str):

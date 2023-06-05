@@ -1,4 +1,5 @@
-# FastAPI - README
+# Backend prueba tecnica - README
+## Mgs. Brayan Andru Montenegro Embus
 
 Este es un breve tutorial para ejecutar un proyecto en FastAPI utilizando un entorno virtual en Python.
 
@@ -13,7 +14,7 @@ Asegúrate de tener instalado lo siguiente en tu sistema:
 ### 1. Clonar el repositorio
 
 ```
-git clone https://github.com/tu_usuario/tu_proyecto.git
+git clone https://github.com/MAB1144-Python/Backend_prueba.git
 ```
 
 ### 2. Crear un entorno virtual (opcional)
@@ -21,7 +22,7 @@ git clone https://github.com/tu_usuario/tu_proyecto.git
 Cambiate al directorio del proyecto:
 
 ```
-cd tu_proyecto
+cd Backend_prueba
 ```
 
 Crea un entorno virtual:
@@ -54,9 +55,11 @@ pip install -r requirements.txt
 
 Esto instalará todas las librerías necesarias para ejecutar el proyecto.
 
-### 4. Configurar la base de datos
+Cambiate al directorio del proyecto:
 
-Si tu proyecto utiliza una base de datos, asegúrate de configurarla adecuadamente. Puedes editar el archivo de configuración `config.py` o cualquier otro archivo de configuración relevante en tu proyecto.
+```
+cd API
+```
 
 ### 5. Ejecutar el servidor FastAPI
 
@@ -70,6 +73,8 @@ Esto iniciará el servidor FastAPI en modo de desarrollo, y cualquier cambio que
 
 ### 6. Acceder a la API
 
-El servidor FastAPI estará disponible en `http://localhost:8000` por defecto. Puedes acceder a la API utilizando tu navegador o cualquier otra herramienta de prueba de API, como cURL o Postman.
+El servidor FastAPI estará disponible en `http://127.0.0.1:8000` por defecto. Puedes acceder a la API utilizando tu navegador o cualquier otra herramienta de prueba de API, como cURL o Postman.
+
+Puedes utilizar las rutas tambien entrando a `http://127.0.0.1:8000/docs`
 
 ¡Y eso es todo! Ahora deberías poder ejecutar y utilizar tu proyecto FastAPI con un entorno virtual en Python.
