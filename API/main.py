@@ -12,11 +12,13 @@ from fastapi import status
 from fastapi.routing import APIRouter
 from route.route_Conteo_Vehiculos import routes_Conteo_Vehiculos
 from route.route_Recaudo_Vehiculos import routes_Recaudo_Vehiculos
+from route.route_Registro import routes_Registro
 
 
 app = FastAPI()
 app.include_router(routes_Conteo_Vehiculos, prefix = "/datos")
 app.include_router(routes_Recaudo_Vehiculos, prefix = "/datos")
+app.include_router(routes_Registro, prefix = "/user")
 # Configuración de CORS
 origins = [
     "http://localhost",
