@@ -91,6 +91,7 @@ async def Recaudo_Vehiculos(sel_estacion: str,sel_sentido: str,sel_categoria: st
         df = pd.read_sql_query(select_query, conn, params=params)  
 
     print(df)
+    recaudo_total = df.valor_tabulado.sum()
     df.fecha_hora = df.fecha_hora.apply(lambda x: x.strftime('%Y-%m-%d, %H:%M:%S'))
     #'estacion', 'sentido', 'fecha_hora', 'categoria', 'valor_tabulado'
     query = f"SELECT COUNT(*) FROM Tabla_Recaudo_Vehiculos"
@@ -121,6 +122,7 @@ async def Recaudo_Vehiculos(sel_estacion: str,sel_sentido: str,sel_categoria: st
     UQ_categoria = list(df.categoria.unique())
     # Cerrar la conexión
     conn.close()
+
     try:
         return {"n_registros":json.loads(pd.Series(total_registros).to_json(orient='values')),
                 "fecha_max":json.loads(pd.Series([max_fecha.strftime('%Y'),max_fecha.strftime('%m'),max_fecha.strftime('%d'),max_fecha.strftime('%H')]).to_json(orient='values')),
@@ -128,6 +130,7 @@ async def Recaudo_Vehiculos(sel_estacion: str,sel_sentido: str,sel_categoria: st
                 "UQ_estacion":json.loads(pd.Series(UQ_estacion).to_json(orient='values')),
                 "UQ_sentido": json.loads(pd.Series(UQ_sentido).to_json(orient='values')),
                 "UQ_categoria": json.loads(pd.Series(UQ_categoria).to_json(orient='values')),
+                "Recaudo_total": json.loads(pd.Series(recaudo_total).to_json(orient='values')),
                 "datos_Recaudo_Vehiculos": json.loads(df.to_json(orient='records')),
         }
     except:
@@ -137,5 +140,6 @@ async def Recaudo_Vehiculos(sel_estacion: str,sel_sentido: str,sel_categoria: st
                 "UQ_estacion":json.loads(pd.Series(["0","0","0","0"]).to_json(orient='values')),
                 "UQ_sentido": json.loads(pd.Series(["0","0","0","0"]).to_json(orient='values')),
                 "UQ_categoria": json.loads(pd.Series(["0","0","0","0"]).to_json(orient='values')),
+                "Recaudo_total": json.loads(pd.Series(0).to_json(orient='values')),
                 "datos_Recaudo_Vehiculos": json.loads(df.to_json(orient='records')),       
         }

@@ -92,6 +92,7 @@ async def Conteo_Vehiculos(sel_estacion: str,sel_sentido: str,sel_categoria: str
         df = pd.read_sql_query(select_query, conn, params=params)  
 
     print(df)
+    conteo_total = df.cantidad.sum()
     df.fecha_hora = df.fecha_hora.apply(lambda x: x.strftime('%Y-%m-%d, %H:%M:%S'))
     #'estacion', 'sentido', 'fecha_hora', 'categoria', 'valor_tabulado'
     query = f"SELECT COUNT(*) FROM Tabla_Conteo_Vehiculos"
@@ -131,6 +132,7 @@ async def Conteo_Vehiculos(sel_estacion: str,sel_sentido: str,sel_categoria: str
                 "UQ_estacion":json.loads(pd.Series(UQ_estacion).to_json(orient='values')),
                 "UQ_sentido": json.loads(pd.Series(UQ_sentido).to_json(orient='values')),
                 "UQ_categoria": json.loads(pd.Series(UQ_categoria).to_json(orient='values')),
+                "Conteo_total": json.loads(pd.Series(conteo_total).to_json(orient='values')),
                 "datos_conteo": json.loads(df.to_json(orient='records')),
         }
     except:
@@ -140,5 +142,6 @@ async def Conteo_Vehiculos(sel_estacion: str,sel_sentido: str,sel_categoria: str
                 "UQ_estacion":json.loads(pd.Series(["0","0","0","0"]).to_json(orient='values')),
                 "UQ_sentido": json.loads(pd.Series(["0","0","0","0"]).to_json(orient='values')),
                 "UQ_categoria": json.loads(pd.Series(["0","0","0","0"]).to_json(orient='values')),
+                "Conteo_total": json.loads(pd.Series(conteo_total).to_json(orient='values')),
                 "datos_conteo": json.loads(df.to_json(orient='records')),       
         }
