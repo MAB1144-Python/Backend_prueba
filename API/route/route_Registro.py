@@ -47,10 +47,8 @@ async def Registro(username: str,first_name: str,last_name: str,cellphone: str,e
 
         # Cerrar la conexión
         conn.close()
-        return {"usuario":json.loads(pd.Series("Registro exitoso").to_json(orient='values')),
-                "token": json.loads(pd.Series("a1b2c3d4e5f6").to_json(orient='values'))         
+        return {"usuario":json.loads(pd.Series("Registro exitoso").to_json(orient='values'))   
         }
     except:
-        return {"usuario":json.loads(pd.Series("Error de registro").to_json(orient='values')),
-                "token": json.loads(pd.Series("").to_json(orient='values'))     
+        return {"usuario":json.loads(pd.Series("Error de registro").to_json(orient='values'))
         }

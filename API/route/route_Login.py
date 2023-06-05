@@ -11,16 +11,16 @@ import datetime
 
 load_dotenv()
 
-routes_Registro = APIRouter()
+routes_login = APIRouter()
 
-@routes_Registro.post(
-    path="/Registro",
+@routes_login.post(
+    path="/login",
     status_code=status.HTTP_200_OK,
     tags=["models"],
     summary="""Datos de Conteo de vehiculos.
     """
     )
-async def Registro(username: str,first_name: str,last_name: str,cellphone: str,email: str,password: str,born_date: str):
+async def login(username: str,password: str):
     print("entro", username)
     
     conn = pyodbc.connect('Driver={SQL Server};'+
@@ -32,25 +32,28 @@ async def Registro(username: str,first_name: str,last_name: str,cellphone: str,e
 
     # Creación de la tabla
     #estacion VARCHAR(50),sentido VARCHAR(50),fecha_hora TIME,cantegoria VARCHAR(50),cantidad INT
-    cursor = conn.cursor()
-    params = [username,first_name,last_name,cellphone,email,password,born_date]
 
-    try:
+    if(True):# try:
         # Consulta para obtener todos los datos de la tabla
-        select_query = "INSERT INTO Tabla_Usuarios (username, first_name, last_name, cellphone, email, password, born_date) VALUES (?, ?, ?, ?, ?, ?, ?)"
+        cursor = conn.cursor()
+        cursor.execute("SELECT COUNT(*) FROM Tabla_Usuarios  WHERE username = ? AND password = ?",
+                   [username, password])
+        count = cursor.fetchone()[0]
+        cursor.close()
+        print(count)
         
-        df = pd.read_sql_query(select_query, conn, params=params)  
+        #df = pd.read_sql_query(select_query, conn, params=params)  
 
-        print(df)
+        #print(df)
         # Confirmar los cambios
         conn.commit()
 
         # Cerrar la conexión
         conn.close()
-        return {"usuario":json.loads(pd.Series("Registro exitoso").to_json(orient='values')),
+        return {"username":json.loads(pd.Series(username).to_json(orient='values')),
                 "token": json.loads(pd.Series("a1b2c3d4e5f6").to_json(orient='values'))         
         }
-    except:
-        return {"usuario":json.loads(pd.Series("Error de registro").to_json(orient='values')),
+    """except:
+        return {"username":json.loads(pd.Series("Error de login").to_json(orient='values')),
                 "token": json.loads(pd.Series("").to_json(orient='values'))     
-        }
+        }"""
