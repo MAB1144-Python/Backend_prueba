@@ -77,4 +77,4 @@ El servidor FastAPI estará disponible en `http://127.0.0.1:8000` por defecto. P
 
 Puedes utilizar las rutas tambien entrando a `http://127.0.0.1:8000/docs`
 
-¡Y eso es todo! Ahora deberías poder ejecutar y utilizar tu proyecto FastAPI con un entorno virtual en Python.
+si persiste algun problema puede comunicarse conmigo al 3175750088
